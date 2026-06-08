@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Chatbot, { WhatsAppButton } from './components/Chatbot';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Projects from './pages/Projects';
@@ -35,6 +36,9 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        {/* Persistent floating buttons — chatbot & WhatsApp */}
+        <WhatsAppButton />
+        <Chatbot />
       </div>
     </Router>
   );

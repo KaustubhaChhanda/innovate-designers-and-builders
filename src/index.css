@@ -3,8 +3,8 @@
 
 /* ─── Tailwind v4 Theme ─── */
 @theme {
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', 'Plus Jakarta Sans', sans-serif;
 
   /* Brand Colors */
   --color-brand-50: #FFF8F0;
@@ -17,6 +17,7 @@
   --color-brand-700: #BC4C14;
   --color-brand-800: #963D18;
   --color-brand-900: #793416;
+  --color-brand-950: #170A03;
 
   /* Slate Neutrals */
   --color-neutral-50: #F8FAFC;
@@ -41,6 +42,27 @@
   --color-deep-500: #1B4332;
   --color-deep-600: #14532D;
   --color-deep-700: #0D3B1F;
+
+  /* Royal Blue Accent */
+  --color-royal-50: #EFF6FF;
+  --color-royal-100: #DBEAFE;
+  --color-royal-500: #3B82F6;
+  --color-royal-600: #2563EB;
+  --color-royal-700: #1D4ED8;
+
+  /* Emerald Green Accent */
+  --color-emerald-50: #ECFDF5;
+  --color-emerald-100: #D1FAE5;
+  --color-emerald-500: #10B981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+
+  /* Amber Gold Accent */
+  --color-amber-50: #FEF3C7;
+  --color-amber-100: #FEEBAD;
+  --color-amber-500: #F59E0B;
+  --color-amber-600: #D97706;
+  --color-amber-700: #B45309;
 
   /* Animation timings */
   --animate-fade-up: fade-up 0.6s ease-out both;
@@ -109,6 +131,31 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-amber-600), var(--color-brand-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-hero-gradient {
+  background: linear-gradient(135deg, var(--color-neutral-950) 0%, var(--color-neutral-900) 45%, var(--color-brand-900) 100%);
+}
+
+.bg-hero-gradient-overlay {
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(227, 99, 24, 0.12) 0%, transparent 45%);
+}
+
+.bg-mesh-glow-orange {
+  background: radial-gradient(circle, rgba(242, 125, 45, 0.08) 0%, transparent 60%);
+}
+
+.bg-mesh-glow-blue {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 60%);
 }
 
 .bg-grid-pattern {

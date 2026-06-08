@@ -60,16 +60,24 @@ export default function Gallery() {
   return (
     <div>
       {/* ─── Header ─── */}
-      <section className="pt-32 pb-16 bg-surface-muted bg-grid-pattern">
-        <div className="max-w-7xl mx-auto px-5 lg:px-8 text-center">
+      <section className="relative pt-40 pb-24 bg-hero-gradient overflow-hidden">
+        {/* Gradients and grids */}
+        <div className="absolute inset-0 bg-hero-gradient-overlay" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+
+        <div className="max-w-7xl mx-auto px-5 lg:px-8 text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Photo Gallery</span>
-            <h1 className="text-4xl lg:text-5xl font-heading font-bold mt-3 text-gradient">Architectural & Interior Gallery</h1>
-            <p className="text-neutral-500 mt-4 max-w-xl mx-auto">
+            <span className="inline-block px-3.5 py-1.5 rounded-full border border-brand-400/35 bg-brand-500/10 text-brand-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+              Photo Gallery
+            </span>
+            <h1 className="text-4xl lg:text-6xl font-heading font-bold text-white leading-tight">
+              Design & Architecture <span className="text-gradient-gold">Gallery</span>
+            </h1>
+            <p className="text-neutral-300 mt-4 max-w-xl mx-auto text-base leading-relaxed">
               Browse our actual completed home elevations and modular interior designing projects across Kerala.
             </p>
           </motion.div>
@@ -80,21 +88,64 @@ export default function Gallery() {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-5 lg:px-8">
           {/* Category Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {Object.keys(categoryNames).map((catKey) => (
-              <button
-                key={catKey}
-                onClick={() => setActiveCategory(catKey)}
-                className={`px-4 py-2 text-xs font-medium rounded-full transition-all duration-300 cursor-pointer ${
-                  activeCategory === catKey
-                    ? 'bg-brand-600 text-white shadow-md shadow-brand-200'
-                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800'
-                }`}
-              >
-                {categoryNames[catKey]}
-              </button>
-            ))}
+          <div className="flex flex-wrap justify-center gap-2 mb-10 max-w-5xl mx-auto">
+            {Object.keys(categoryNames).map((catKey) => {
+              const isActive = activeCategory === catKey;
+              // Fully static class strings — Tailwind v4 requires complete class names for purging
+              const pillColors = {
+                'all': {
+                  active:   'bg-brand-50 border-brand-400 text-brand-700',
+                  inactive: 'bg-brand-50/0 border-neutral-200 text-neutral-500 hover:border-brand-400 hover:text-brand-700 hover:bg-brand-50',
+                },
+                'interior': {
+                  active:   'bg-emerald-50 border-emerald-400 text-emerald-700',
+                  inactive: 'bg-emerald-50/0 border-neutral-200 text-neutral-500 hover:border-emerald-400 hover:text-emerald-700 hover:bg-emerald-50',
+                },
+                'box-type': {
+                  active:   'bg-blue-50 border-blue-400 text-blue-700',
+                  inactive: 'bg-blue-50/0 border-neutral-200 text-neutral-500 hover:border-blue-400 hover:text-blue-700 hover:bg-blue-50',
+                },
+                'colonial': {
+                  active:   'bg-amber-50 border-amber-400 text-amber-700',
+                  inactive: 'bg-amber-50/0 border-neutral-200 text-neutral-500 hover:border-amber-400 hover:text-amber-700 hover:bg-amber-50',
+                },
+                'contemporary': {
+                  active:   'bg-indigo-50 border-indigo-400 text-indigo-700',
+                  inactive: 'bg-indigo-50/0 border-neutral-200 text-neutral-500 hover:border-indigo-400 hover:text-indigo-700 hover:bg-indigo-50',
+                },
+                'curved-roof': {
+                  active:   'bg-rose-50 border-rose-400 text-rose-700',
+                  inactive: 'bg-rose-50/0 border-neutral-200 text-neutral-500 hover:border-rose-400 hover:text-rose-700 hover:bg-rose-50',
+                },
+                'single-storey': {
+                  active:   'bg-teal-50 border-teal-400 text-teal-700',
+                  inactive: 'bg-teal-50/0 border-neutral-200 text-neutral-500 hover:border-teal-400 hover:text-teal-700 hover:bg-teal-50',
+                },
+                'traditional-contemporary': {
+                  active:   'bg-orange-50 border-orange-400 text-orange-700',
+                  inactive: 'bg-orange-50/0 border-neutral-200 text-neutral-500 hover:border-orange-400 hover:text-orange-700 hover:bg-orange-50',
+                },
+                'western-type': {
+                  active:   'bg-violet-50 border-violet-400 text-violet-700',
+                  inactive: 'bg-violet-50/0 border-neutral-200 text-neutral-500 hover:border-violet-400 hover:text-violet-700 hover:bg-violet-50',
+                },
+              };
+              const c = pillColors[catKey] || pillColors['all'];
+              return (
+                <button
+                  key={catKey}
+                  onClick={() => setActiveCategory(catKey)}
+                  className={`px-4 py-2 text-xs font-semibold rounded-full transition-all duration-300 cursor-pointer border ${
+                    isActive ? `${c.active} scale-105 shadow-sm` : c.inactive
+                  }`}
+                >
+                  {categoryNames[catKey]}
+                </button>
+              );
+            })}
           </div>
+
+
 
           {/* Count Label */}
           <div className="text-right text-[11px] text-neutral-400 mb-4 font-medium uppercase tracking-wider">
@@ -125,18 +176,18 @@ export default function Gallery() {
                     <img
                       src={image.src}
                       alt={image.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:brightness-[0.45]"
                       loading="lazy"
                     />
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                      <span className="text-[9px] text-brand-400 uppercase font-bold tracking-widest mb-1">
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-neutral-900/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                      <span className="text-[9px] text-amber-400 uppercase font-extrabold tracking-widest mb-1">
                         {categoryNames[image.category]}
                       </span>
-                      <h4 className="text-xs font-heading font-semibold text-white leading-snug line-clamp-2 pr-6">
+                      <h4 className="text-xs font-heading font-bold text-white leading-snug line-clamp-2 pr-6">
                         {cleanImageTitle(image.title, image.category)}
                       </h4>
-                      <div className="absolute bottom-3 right-3 w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-white/70">
+                      <div className="absolute bottom-3 right-3 w-7 h-7 rounded-full bg-white/20 flex items-center justify-center text-white shadow-sm">
                         <ZoomIn size={12} />
                       </div>
                     </div>

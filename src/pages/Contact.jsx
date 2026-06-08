@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, CheckCircle, MessageSquare } from 'lucide-react';
+import { socialLinks } from '../components/Footer';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -33,25 +34,32 @@ export default function Contact() {
   return (
     <div>
       {/* ─── Header ─── */}
-      <section className="pt-32 pb-16 bg-surface-muted bg-grid-pattern">
-        <div className="max-w-7xl mx-auto px-5 lg:px-8 text-center">
+      <section className="relative pt-40 pb-24 bg-hero-gradient overflow-hidden">
+        {/* Gradients and grids */}
+        <div className="absolute inset-0 bg-hero-gradient-overlay" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+
+        <div className="max-w-7xl mx-auto px-5 lg:px-8 text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Get in Touch</span>
-            <h1 className="text-4xl lg:text-5xl font-heading font-bold mt-3 text-gradient">Contact Our Office</h1>
-            <p className="text-neutral-500 mt-4 max-w-xl mx-auto">
+            <span className="inline-block px-3.5 py-1.5 rounded-full border border-brand-400/35 bg-brand-500/10 text-brand-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+              Get in Touch
+            </span>
+            <h1 className="text-4xl lg:text-6xl font-heading font-bold text-white leading-tight">
+              Contact Our <span className="text-gradient-gold">Office</span>
+            </h1>
+            <p className="text-neutral-300 mt-4 max-w-xl mx-auto text-base leading-relaxed">
               Reach out for plans analysis, free estimates, or residential construction queries.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* ─── Contact + Form ─── */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-5 lg:px-8">
+      <section className="py-20 bg-gradient-to-br from-slate-50 via-white to-amber-50/40 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
             {/* Contact Info */}
             <motion.div
@@ -68,8 +76,8 @@ export default function Contact() {
 
               <div className="flex flex-col gap-6 mt-2">
                 {/* Address */}
-                <div className="flex gap-4 items-start">
-                  <div className="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+                <div className="flex gap-4 items-start group">
+                  <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 shadow-sm border border-amber-100 group-hover:scale-110 transition-transform duration-300">
                     <MapPin size={20} />
                   </div>
                   <div>
@@ -83,27 +91,27 @@ export default function Contact() {
                 </div>
 
                 {/* Phone */}
-                <div className="flex gap-4 items-start">
-                  <div className="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+                <div className="flex gap-4 items-start group">
+                  <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 shadow-sm border border-emerald-100 group-hover:scale-110 transition-transform duration-300">
                     <Phone size={20} />
                   </div>
                   <div>
                     <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1.5">Phone Numbers</h4>
-                    <div className="flex flex-col text-sm">
-                      <a href="tel:+919995365128" className="text-neutral-700 hover:text-brand-600 transition-colors">+91 99953 65128</a>
-                      <a href="tel:+919388100090" className="text-neutral-700 hover:text-brand-600 transition-colors">+91 93881 00090</a>
+                    <div className="flex flex-col text-sm font-medium">
+                      <a href="tel:+919995365128" className="text-neutral-700 hover:text-emerald-600 transition-colors">+91 99953 65128</a>
+                      <a href="tel:+919388100090" className="text-neutral-700 hover:text-emerald-600 transition-colors">+91 93881 00090</a>
                     </div>
                   </div>
                 </div>
 
                 {/* Email */}
-                <div className="flex gap-4 items-start">
-                  <div className="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+                <div className="flex gap-4 items-start group">
+                  <div className="w-11 h-11 rounded-xl bg-royal-50 text-royal-600 flex items-center justify-center shrink-0 shadow-sm border border-royal-100 group-hover:scale-110 transition-transform duration-300">
                     <Mail size={20} />
                   </div>
                   <div>
                     <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1.5">Email Address</h4>
-                    <a href="mailto:idbtvm@gmail.com" className="text-sm text-neutral-700 hover:text-brand-600 transition-colors">
+                    <a href="mailto:idbtvm@gmail.com" className="text-sm text-neutral-700 hover:text-royal-600 transition-colors font-medium">
                       idbtvm@gmail.com
                     </a>
                   </div>
@@ -122,6 +130,34 @@ export default function Contact() {
                   Chat on WhatsApp
                 </a>
               </div>
+
+              {/* Social Media Links */}
+              <div className="mt-8 pt-6 border-t border-neutral-100">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-4">Follow Us On</h4>
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  {socialLinks.map(({ label, href, Icon, bgHover }) => {
+                    const isX = label.includes('X');
+                    return (
+                      <motion.a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={label}
+                        whileHover={{ scale: 1.12 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`w-10 h-10 rounded-full border flex items-center justify-center shadow-sm transition-all duration-300 ${
+                          isX 
+                            ? 'bg-white border-neutral-200 text-neutral-900 hover:bg-neutral-50 hover:border-neutral-400' 
+                            : `${bgHover} bg-white border-neutral-200`
+                        }`}
+                      >
+                        <Icon />
+                      </motion.a>
+                    );
+                  })}
+                </div>
+              </div>
             </motion.div>
 
             {/* Form */}
@@ -130,9 +166,10 @@ export default function Contact() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-white rounded-2xl border border-neutral-100 shadow-lg p-8 lg:p-10"
+              className="bg-white rounded-2xl border border-brand-100 shadow-xl p-8 lg:p-10 relative overflow-hidden"
             >
-              <h3 className="text-2xl font-heading font-bold text-neutral-900 mb-6">Send an Inquiry</h3>
+              <div className="absolute -top-12 -right-12 w-24 h-24 bg-brand-50 rounded-full blur-xl" />
+              <h3 className="text-2xl font-heading font-bold text-neutral-900 mb-6 relative z-10">Send an Inquiry</h3>
 
               <AnimatePresence mode="wait">
                 {!isSubmitted ? (
@@ -209,7 +246,7 @@ export default function Contact() {
 
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold py-3.5 rounded-xl transition-all duration-300 shadow-md shadow-brand-200 hover:shadow-lg hover:shadow-brand-300 cursor-pointer mt-1"
+                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-amber-500 hover:from-brand-700 hover:to-amber-600 text-white text-sm font-bold py-3.5 rounded-xl transition-all duration-300 shadow-md shadow-brand-200 hover:shadow-lg hover:scale-[1.01] cursor-pointer mt-1"
                     >
                       <Send size={15} />
                       Send Message

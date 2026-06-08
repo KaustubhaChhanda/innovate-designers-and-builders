@@ -43,8 +43,8 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           showSolidBg
-            ? 'py-2 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.08)] border-b border-neutral-200/60'
-            : 'py-4 bg-white/10 backdrop-blur-md'
+            ? 'py-2 bg-neutral-950/95 shadow-lg border-b border-neutral-900'
+            : 'py-4 bg-white/5 backdrop-blur-md'
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 lg:px-8 flex items-center justify-between">
@@ -53,19 +53,13 @@ export default function Navbar() {
             <img
               src="/assets/images/logo/innovate-builders-designers-logo.png"
               alt="Innovate Logo"
-              className={`h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105 ${
-                !showSolidBg ? 'brightness-0 invert' : ''
-              }`}
+              className="h-9 w-auto object-contain transition-all duration-300 group-hover:scale-105 brightness-0 invert"
             />
             <div className="hidden sm:flex flex-col">
-              <span className={`font-heading text-[17px] font-bold tracking-tight leading-none transition-colors duration-300 ${
-                showSolidBg ? 'text-neutral-900' : 'text-white'
-              }`}>
+              <span className="font-heading text-[17px] font-bold tracking-tight leading-none transition-colors duration-300 text-white">
                 Innovate
               </span>
-              <span className={`text-[9px] uppercase tracking-[0.2em] font-semibold mt-0.5 transition-colors duration-300 ${
-                showSolidBg ? 'text-brand-600' : 'text-brand-300'
-              }`}>
+              <span className="text-[9px] uppercase tracking-[0.2em] font-semibold mt-0.5 transition-colors duration-300 text-brand-400">
                 Designers & Builders
               </span>
             </div>
@@ -80,9 +74,9 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `relative px-3.5 py-2 text-[13px] font-medium tracking-wide uppercase transition-colors duration-300 rounded-lg ${
                     isActive
-                      ? showSolidBg ? 'text-brand-600' : 'text-brand-300'
+                      ? 'text-brand-400'
                       : showSolidBg
-                        ? 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100/60'
+                        ? 'text-neutral-300 hover:text-white hover:bg-white/5'
                         : 'text-white/80 hover:text-white hover:bg-white/10'
                   }`
                 }
@@ -93,9 +87,7 @@ export default function Navbar() {
                     {isActive && (
                       <motion.span
                         layoutId="navIndicator"
-                        className={`absolute bottom-0 left-3.5 right-3.5 h-[2px] rounded-full ${
-                          showSolidBg ? 'bg-brand-500' : 'bg-brand-300'
-                        }`}
+                        className="absolute bottom-0 left-3.5 right-3.5 h-[2px] rounded-full bg-brand-500"
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -123,9 +115,7 @@ export default function Navbar() {
             {/* Mobile hamburger */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`md:hidden p-2 rounded-lg transition-colors ${
-                showSolidBg ? 'text-neutral-700 hover:bg-neutral-100' : 'text-white hover:bg-white/10'
-              }`}
+              className="md:hidden p-2 rounded-lg transition-colors text-white hover:bg-white/10"
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={22} /> : <Menu size={22} />}
@@ -141,7 +131,7 @@ export default function Navbar() {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="md:hidden overflow-hidden bg-white border-t border-neutral-200/60"
+              className="md:hidden overflow-hidden bg-neutral-950 border-t border-neutral-900"
             >
               <div className="px-5 py-6 flex flex-col gap-1">
                 {navLinks.map((link) => (
@@ -152,8 +142,8 @@ export default function Navbar() {
                     className={({ isActive }) =>
                       `text-[15px] font-medium py-3 px-4 rounded-xl transition-all duration-200 ${
                         isActive
-                          ? 'text-brand-600 bg-brand-50'
-                          : 'text-neutral-700 hover:text-neutral-900 hover:bg-neutral-50'
+                          ? 'text-brand-400 bg-brand-950/35'
+                          : 'text-neutral-300 hover:text-white hover:bg-neutral-900'
                       }`
                     }
                   >
@@ -161,7 +151,7 @@ export default function Navbar() {
                   </NavLink>
                 ))}
 
-                <div className="mt-4 pt-4 border-t border-neutral-200">
+                <div className="mt-4 pt-4 border-t border-neutral-900">
                   <a
                     href="tel:+919995365128"
                     className="flex items-center justify-center gap-2 bg-brand-600 text-white text-sm font-semibold py-3 rounded-xl hover:bg-brand-700 transition-colors"

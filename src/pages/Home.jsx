@@ -2,6 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, HardHat, Compass, Users, CheckCircle, ArrowRight, Star, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
+import { useCountUp } from '../hooks/useCountUp';
+
+// Animated rolling number component
+function StatCounter({ value, label, color }) {
+  const [ref, display] = useCountUp(value, 2000);
+  return (
+    <div ref={ref} className="flex flex-col items-center py-8 px-4 hover:scale-105 transition-transform duration-300">
+      <motion.span
+        className={`text-3xl lg:text-4xl font-heading font-bold tabular-nums ${color}`}
+      >
+        {display}
+      </motion.span>
+      <span className="text-xs text-neutral-600 uppercase tracking-wider font-semibold mt-1.5 text-center">{label}</span>
+    </div>
+  );
+}
 
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -29,25 +45,37 @@ export default function Home() {
     {
       icon: <HardHat size={28} />,
       title: "House Construction",
-      description: "Custom residential building constructed to matching premium standards using prime quality materials and engineering."
+      description: "Custom residential building constructed to matching premium standards using prime quality materials and engineering.",
+      borderClass: "border-t-brand-500",
+      bgClass: "bg-brand-50",
+      iconClass: "text-brand-600",
+      hoverIconClass: "group-hover:bg-gradient-to-br group-hover:from-brand-500 group-hover:to-brand-600 group-hover:text-white"
     },
     {
       icon: <Compass size={28} />,
       title: "Architectural Design",
-      description: "Modern elevations, floor plans, and functional layout designs crafted by experienced designers for Kerala homes."
+      description: "Modern elevations, floor plans, and functional layout designs crafted by experienced designers for Kerala homes.",
+      borderClass: "border-t-royal-500",
+      bgClass: "bg-royal-50",
+      iconClass: "text-royal-600",
+      hoverIconClass: "group-hover:bg-gradient-to-br group-hover:from-royal-500 group-hover:to-royal-600 group-hover:text-white"
     },
     {
       icon: <CheckCircle size={28} />,
       title: "Turnkey Projects",
-      description: "Hassle-free complete solutions handling everything from design permission to final construction and keys delivery."
+      description: "Hassle-free complete solutions handling everything from design permission to final construction and keys delivery.",
+      borderClass: "border-t-emerald-500",
+      bgClass: "bg-emerald-50",
+      iconClass: "text-emerald-600",
+      hoverIconClass: "group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-emerald-600 group-hover:text-white"
     }
   ];
 
   const stats = [
-    { value: '150+', label: 'Projects Completed' },
-    { value: '10+', label: 'Years Experience' },
-    { value: '100%', label: 'Turnkey Delivery' },
-    { value: '50+', label: 'Active Projects' }
+    { value: '150+', label: 'Projects Completed', color: 'text-brand-600' },
+    { value: '10+', label: 'Years Experience', color: 'text-royal-600' },
+    { value: '100%', label: 'Turnkey Delivery', color: 'text-emerald-600' },
+    { value: '50+', label: 'Active Projects', color: 'text-amber-600' }
   ];
 
   // Auto-rotate testimonials
@@ -120,26 +148,23 @@ export default function Home() {
       </section>
 
       {/* ─── Stats Bar ─── */}
-      <section className="relative -mt-16 z-20">
+      <section className="relative pt-12 pb-6 z-20 bg-white">
         <div className="max-w-5xl mx-auto px-5 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-2xl shadow-xl shadow-neutral-200/50 border border-neutral-100 grid grid-cols-2 lg:grid-cols-4 divide-x divide-neutral-100"
+            className="bg-gradient-to-r from-brand-50/90 via-white to-royal-50/90 backdrop-blur-md rounded-2xl shadow-xl shadow-neutral-200/40 border border-brand-100/60 grid grid-cols-2 lg:grid-cols-4 divide-x divide-neutral-100"
           >
             {stats.map((stat, idx) => (
-              <div key={idx} className="flex flex-col items-center py-8 px-4">
-                <span className="text-3xl lg:text-4xl font-heading font-bold text-brand-600">{stat.value}</span>
-                <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium mt-1">{stat.label}</span>
-              </div>
+              <StatCounter key={idx} value={stat.value} label={stat.label} color={stat.color} />
             ))}
           </motion.div>
         </div>
       </section>
 
       {/* ─── About Intro ─── */}
-      <section className="py-24 lg:py-32">
+      <section className="py-24 lg:py-32 bg-gradient-to-br from-amber-50/60 via-white to-orange-50/40 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -185,9 +210,9 @@ export default function Home() {
                 />
               </div>
               {/* Floating Badge */}
-              <div className="absolute -bottom-6 -left-4 lg:-left-8 bg-white rounded-xl shadow-lg border border-neutral-100 p-5 hidden sm:block">
-                <span className="font-heading text-3xl font-bold text-brand-600 block">100%</span>
-                <p className="text-[10px] font-medium uppercase tracking-wider text-neutral-500 mt-0.5">Turnkey Delivery<br/>Guarantee</p>
+              <div className="absolute -bottom-6 -left-4 lg:-left-8 bg-gradient-to-br from-white to-amber-50 rounded-xl shadow-lg border-2 border-amber-200 p-5 hidden sm:block">
+                <span className="font-heading text-3xl font-bold text-gradient-gold block">100%</span>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-amber-800 mt-0.5">Turnkey Delivery<br/>Guarantee</p>
               </div>
             </motion.div>
           </div>
@@ -211,14 +236,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-white rounded-2xl p-8 border border-neutral-100 hover:border-brand-200 shadow-sm hover:shadow-lg hover:shadow-brand-100/40 transition-all duration-300 group flex flex-col"
+                className={`bg-white rounded-2xl p-8 border border-neutral-100 ${service.borderClass} border-t-4 hover:border-brand-200 shadow-sm hover:shadow-xl hover:shadow-neutral-200/50 transition-all duration-300 group flex flex-col`}
               >
-                <div className="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-5 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300">
+                <div className={`w-12 h-12 rounded-xl ${service.bgClass} ${service.iconClass} flex items-center justify-center mb-5 ${service.hoverIconClass} transition-all duration-300`}>
                   {service.icon}
                 </div>
                 <h3 className="text-xl font-heading font-bold text-neutral-900 mb-3">{service.title}</h3>
                 <p className="text-sm text-neutral-500 leading-relaxed mb-5 flex-1">{service.description}</p>
-                <Link to="/services" className="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold hover:gap-2.5 transition-all duration-300">
+                <Link to="/services" className={`inline-flex items-center gap-1.5 ${service.iconClass} text-sm font-semibold hover:gap-2.5 transition-all duration-300`}>
                   Learn More <ArrowRight size={13} />
                 </Link>
               </motion.div>
@@ -228,20 +253,21 @@ export default function Home() {
       </section>
 
       {/* ─── Why Choose Us ─── */}
-      <section className="py-24 lg:py-32">
+      <section className="py-24 lg:py-32 bg-gradient-to-br from-neutral-950 via-slate-900 to-brand-950 relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5" />
         <div className="max-w-7xl mx-auto px-5 lg:px-8">
           <div className="text-center mb-16">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Value Proposition</span>
-            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-neutral-900 mt-3">Why Choose Innovate</h2>
-            <p className="text-neutral-500 mt-3 max-w-lg mx-auto">We merge high quality workmanship with client centric processes</p>
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-300 bg-brand-500/15 px-3 py-1 rounded-full">Value Proposition</span>
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-white mt-4">Why Choose Innovate</h2>
+            <p className="text-neutral-400 mt-3 max-w-lg mx-auto">We merge high quality workmanship with client centric processes</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <ShieldCheck size={22} />, title: 'Premium Materials', desc: 'Always using standard and tested grade materials for solid construction durability.' },
-              { icon: <Users size={22} />, title: 'Experienced Team', desc: 'Equipped with qualified architects and site engineers supervising each structural step.' },
-              { icon: <CheckCircle size={22} />, title: 'On-Time Delivery', desc: 'Following strict scheduling processes to hand over key on the committed date.' },
-              { icon: <Compass size={22} />, title: 'Bespoke Design', desc: 'Personalized design elevations reflecting your lifestyle and functional needs.' }
+              { icon: <ShieldCheck size={22} />, title: 'Premium Materials', desc: 'Always using standard and tested grade materials for solid construction durability.', bg: 'bg-white/5 border-white/10 hover:bg-white/10', iconBg: 'bg-gradient-to-br from-brand-500 to-amber-500 text-white' },
+              { icon: <Users size={22} />, title: 'Experienced Team', desc: 'Equipped with qualified architects and site engineers supervising each structural step.', bg: 'bg-white/5 border-white/10 hover:bg-white/10', iconBg: 'bg-gradient-to-br from-blue-500 to-cyan-400 text-white' },
+              { icon: <CheckCircle size={22} />, title: 'On-Time Delivery', desc: 'Following strict scheduling processes to hand over key on the committed date.', bg: 'bg-white/5 border-white/10 hover:bg-white/10', iconBg: 'bg-gradient-to-br from-emerald-500 to-teal-400 text-white' },
+              { icon: <Compass size={22} />, title: 'Bespoke Design', desc: 'Personalized design elevations reflecting your lifestyle and functional needs.', bg: 'bg-white/5 border-white/10 hover:bg-white/10', iconBg: 'bg-gradient-to-br from-violet-500 to-purple-400 text-white' }
             ].map((item, idx) => (
               <motion.div
                 key={idx}
@@ -249,13 +275,13 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.08 }}
-                className="text-center p-8 rounded-2xl border border-neutral-100 bg-white hover:bg-brand-50/30 transition-colors duration-300 group"
+                className={`text-center p-8 rounded-2xl border ${item.bg} transition-all duration-300 group`}
               >
-                <div className="w-11 h-11 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className={`w-12 h-12 rounded-xl ${item.iconBg} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
                   {item.icon}
                 </div>
-                <h4 className="font-heading font-bold text-neutral-900 mb-2">{item.title}</h4>
-                <p className="text-xs text-neutral-500 leading-relaxed">{item.desc}</p>
+                <h3 className="text-base font-heading font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-sm text-neutral-400 leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -263,41 +289,40 @@ export default function Home() {
       </section>
 
       {/* ─── Testimonials ─── */}
-      <section className="py-24 bg-neutral-950 relative overflow-hidden">
-        {/* Decorative */}
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-500/5 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-brand-500/5 blur-3xl" />
-
+      <section className="py-24 bg-gradient-to-br from-neutral-950 via-neutral-900 to-brand-950 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-5 lg:px-8 relative z-10">
           <div className="text-center mb-14">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-400">Reviews</span>
-            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-white mt-3">Client Testimonials</h2>
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-300 bg-brand-500/10 px-3 py-1 rounded-full">Reviews</span>
+            <h2 className="text-3xl lg:text-4xl font-heading font-bold text-white mt-4">Client Testimonials</h2>
             <p className="text-neutral-400 mt-3">Hear what our homeowners say about their building journey</p>
           </div>
 
-          <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 p-10 lg:p-14">
+          <div className="bg-white/5 backdrop-blur-lg rounded-2xl border-2 border-white/10 p-10 lg:p-14 shadow-2xl relative">
+            {/* Top border colored accent */}
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-500 via-royal-500 to-amber-500 rounded-t-2xl" />
+
             {/* Stars */}
             <div className="flex justify-center gap-1 text-amber-400 mb-8">
               {[...Array(5)].map((_, i) => <Star key={i} size={18} fill="currentColor" />)}
             </div>
 
-            <div className="min-h-[120px] flex items-center justify-center">
+            <div className="min-h-[140px] flex items-center justify-center">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeTestimonial}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.45 }}
                   className="text-center"
                 >
-                  <p className="text-lg lg:text-xl italic text-neutral-300 leading-relaxed mb-8">
+                  <p className="text-lg lg:text-xl italic text-neutral-200 leading-relaxed mb-8">
                     "{testimonials[activeTestimonial].text}"
                   </p>
-                  <h4 className="font-heading text-lg font-bold text-brand-400">
+                  <h4 className="font-heading text-lg font-bold text-gradient-gold">
                     {testimonials[activeTestimonial].name}
                   </h4>
-                  <span className="text-xs text-neutral-500">Verified Client</span>
+                  <span className="text-xs text-neutral-400 font-medium">Verified Client</span>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -306,24 +331,24 @@ export default function Home() {
             <div className="flex justify-between items-center mt-10">
               <button
                 onClick={() => setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-                className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-500 transition-all duration-300 cursor-pointer"
+                className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-500 hover:bg-brand-500/10 transition-all duration-300 cursor-pointer"
               >
                 <ChevronLeft size={16} />
               </button>
-              <div className="flex gap-2">
+              <div className="flex gap-2.5">
                 {testimonials.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveTestimonial(idx)}
                     className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      idx === activeTestimonial ? 'w-8 bg-brand-500' : 'w-1.5 bg-neutral-600'
+                      idx === activeTestimonial ? 'w-8 bg-brand-500' : 'w-2 bg-neutral-600 hover:bg-neutral-500'
                     }`}
                   />
                 ))}
               </div>
               <button
                 onClick={() => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)}
-                className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-500 transition-all duration-300 cursor-pointer"
+                className="w-10 h-10 rounded-full border border-neutral-700 flex items-center justify-center text-neutral-400 hover:text-white hover:border-brand-500 hover:bg-brand-500/10 transition-all duration-300 cursor-pointer"
               >
                 <ChevronRight size={16} />
               </button>
@@ -339,31 +364,33 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 via-brand-500 to-brand-700 p-12 lg:p-16 text-center"
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-brand-700 via-orange-600 to-amber-600 p-12 lg:p-16 text-center shadow-xl shadow-brand-900/15"
           >
             {/* Pattern overlay */}
             <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+            <div className="absolute -top-24 -left-24 w-48 h-48 rounded-full bg-white/10 blur-xl" />
+            <div className="absolute -bottom-24 -right-24 w-48 h-48 rounded-full bg-white/10 blur-xl" />
 
             <div className="relative z-10">
-              <span className="inline-block px-4 py-1.5 rounded-full border border-white/20 bg-white/10 text-white/80 text-xs font-semibold uppercase tracking-[0.2em] mb-5">
+              <span className="inline-block px-4 py-1.5 rounded-full border border-white/30 bg-white/10 text-white text-xs font-semibold uppercase tracking-[0.2em] mb-5">
                 Start Your Project
               </span>
               <h2 className="text-3xl lg:text-4xl font-heading font-bold text-white mb-4">
                 Let's Discuss Your Dream Home Layout
               </h2>
-              <p className="text-white/70 max-w-xl mx-auto mb-8">
+              <p className="text-white/85 max-w-xl mx-auto mb-8">
                 Consult with our engineering and design team for a free structural consultation and design cost review.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 bg-white text-brand-700 text-sm font-bold px-8 py-3.5 rounded-full hover:bg-neutral-100 transition-all duration-300 shadow-lg"
+                  className="inline-flex items-center gap-2 bg-white hover:bg-amber-50 text-brand-700 hover:text-brand-800 text-sm font-bold px-8 py-3.5 rounded-full transition-all duration-300 shadow-lg"
                 >
                   Book a Consultation
                 </Link>
                 <a
                   href="tel:+919995365128"
-                  className="inline-flex items-center gap-2 bg-white/15 text-white text-sm font-semibold px-8 py-3.5 rounded-full border border-white/20 hover:bg-white/25 transition-all duration-300"
+                  className="inline-flex items-center gap-2 bg-white/15 hover:bg-white/25 text-white text-sm font-semibold px-8 py-3.5 rounded-full border border-white/20 transition-all duration-300"
                 >
                   <Phone size={14} />
                   Call Now

@@ -26,16 +26,24 @@ export default function Projects() {
   return (
     <div>
       {/* ─── Header ─── */}
-      <section className="pt-32 pb-16 bg-surface-muted bg-grid-pattern">
-        <div className="max-w-7xl mx-auto px-5 lg:px-8 text-center">
+      <section className="relative pt-40 pb-24 bg-hero-gradient overflow-hidden">
+        {/* Gradients and grids */}
+        <div className="absolute inset-0 bg-hero-gradient-overlay" />
+        <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+
+        <div className="max-w-7xl mx-auto px-5 lg:px-8 text-center relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-600">Video Portfolio</span>
-            <h1 className="text-4xl lg:text-5xl font-heading font-bold mt-3 text-gradient">Construction Project Showcases</h1>
-            <p className="text-neutral-500 mt-4 max-w-xl mx-auto">
+            <span className="inline-block px-3.5 py-1.5 rounded-full border border-brand-400/35 bg-brand-500/10 text-brand-300 text-xs font-semibold uppercase tracking-[0.2em] mb-4">
+              Video Portfolio
+            </span>
+            <h1 className="text-4xl lg:text-6xl font-heading font-bold text-white leading-tight">
+              Construction <span className="text-gradient-gold">Showcases</span>
+            </h1>
+            <p className="text-neutral-300 mt-4 max-w-xl mx-auto text-base leading-relaxed">
               Explore walk-through project videos detailing our house and villa constructions across Kerala.
             </p>
           </motion.div>
@@ -47,19 +55,32 @@ export default function Projects() {
         <div className="max-w-7xl mx-auto px-5 lg:px-8">
           {/* Filter Tabs */}
           <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {categories.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 cursor-pointer ${
-                  activeTab === tab
-                    ? 'bg-brand-600 text-white shadow-md shadow-brand-200'
-                    : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800'
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
+            {categories.map((tab) => {
+              const isActive = activeTab === tab;
+              // Pick border focus colors
+              const tabColorMap = {
+                'All': 'from-brand-600 to-amber-500 shadow-brand-500/20',
+                'Budget Home': 'from-emerald-600 to-teal-500 shadow-emerald-500/20',
+                'Economical Home': 'from-royal-600 to-blue-500 shadow-royal-500/20',
+                'Semi Economical Home': 'from-indigo-600 to-purple-500 shadow-indigo-500/20',
+                'Luxury Home': 'from-amber-600 to-orange-500 shadow-amber-500/20'
+              };
+              const gradient = tabColorMap[tab] || 'from-brand-600 to-amber-500 shadow-brand-500/20';
+              
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 cursor-pointer border ${
+                    isActive
+                      ? `bg-gradient-to-r ${gradient} text-white border-transparent shadow-lg scale-105`
+                      : 'bg-white text-neutral-600 border-neutral-200 hover:border-neutral-300 hover:text-neutral-900 hover:bg-neutral-50'
+                  }`}
+                >
+                  {tab}
+                </button>
+              );
+            })}
           </div>
 
           {/* Videos Grid */}
@@ -86,7 +107,7 @@ export default function Projects() {
                     {/* Thumbnail */}
                     <div className="relative aspect-video w-full overflow-hidden bg-neutral-100">
                       <img
-                        src={project.thumbnail}
+                        src={`https://i.ytimg.com/vi/${project.id}/hqdefault.jpg`}
                         alt={project.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
@@ -94,11 +115,11 @@ export default function Projects() {
                           const id = project.id;
                           // Cascade: hqdefault -> mqdefault -> sddefault
                           if (img.src.includes('hqdefault')) {
-                            img.src = `https://img.youtube.com/vi/${id}/mqdefault.jpg`;
+                            img.src = `https://i.ytimg.com/vi/${id}/mqdefault.jpg`;
                           } else if (img.src.includes('mqdefault')) {
-                            img.src = `https://img.youtube.com/vi/${id}/sddefault.jpg`;
+                            img.src = `https://i.ytimg.com/vi/${id}/sddefault.jpg`;
                           } else if (!img.src.includes('sddefault')) {
-                            img.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+                            img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
                           }
                         }}
                       />
@@ -111,7 +132,12 @@ export default function Projects() {
                       </div>
 
                       {/* Category Badge */}
-                      <span className="absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm rounded-full text-brand-600">
+                      <span className={`absolute top-3 left-3 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm rounded-full ${
+                        project.category === 'Budget Home' ? 'bg-emerald-50/90 text-emerald-700 border border-emerald-250/50' :
+                        project.category === 'Economical Home' ? 'bg-royal-50/90 text-royal-700 border border-royal-250/50' :
+                        project.category === 'Semi Economical Home' ? 'bg-indigo-50/90 text-indigo-700 border border-indigo-250/50' :
+                        'bg-amber-50/90 text-amber-700 border border-amber-250/50'
+                      }`}>
                         {project.category}
                       </span>
                     </div>

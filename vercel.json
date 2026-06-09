@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/groq/:path*",
+      "destination": "https://api.groq.com/:path*"
+    },
+    {
+      "source": "/((?!assets/|api/|favicon.ico).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
